@@ -29,9 +29,8 @@ export class AuctionController {
   @Post()
   async create(
     @Body() createAuctionDto: CreateAuctionDto,
-    @Request() req: { user: AuthenticatedUser },
+    @CurrentUser() user: AuthenticatedUser,
   ) {
-    const user = req.user;
     return await this.auctionService.create(user, createAuctionDto);
   }
 
@@ -45,23 +44,6 @@ export class AuctionController {
   findOne(@Param('id') id: string) {
     return this.auctionService.findOne(+id);
   }
-
-  /*
-  @UseGuards(JwtAuthGuard)
-  @Post(':id/offers')
-  async addOffer(
-    @Param('id') auctionId: string,
-    @Body() createOfferDto: CreateOfferDto,
-    @Request() req: { user: AuthenticatedUser },
-  ): Promise<OfferResponseDto> {
-    const user = req.user;
-    return await this.offerService.create(
-      user,
-      Number(auctionId),
-      createOfferDto,
-    );
-  }
-  */
 
   @Post(':id/offers')
   @UseGuards(JwtAuthGuard)
