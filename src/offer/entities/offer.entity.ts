@@ -23,7 +23,7 @@ export class Offer {
   @Column({ type: 'numeric' })
   buyerId!: number;
 
-  @CreateDateColumn({ type: 'datetime' })
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt!: Date;
 
   @ManyToOne(() => Auction, (auction: Auction) => auction.offers, {

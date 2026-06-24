@@ -10,6 +10,10 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { User } from './user/entities/user.entity';
+import * as path from 'path';
+import * as dotenv from 'dotenv';
+
+dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 @Module({
   imports: [
@@ -21,13 +25,13 @@ import { User } from './user/entities/user.entity';
     AuctionModule,
     OfferModule,
     TypeOrmModule.forRoot({
-      type: 'better-sqlite3',
-      database: './data/dark-bay.sqlite',
+      type: 'postgres',
+      url: process.env.DATABASE_URL,
       entities: [Auction, Offer, User],
       synchronize: false,
       logging: false,
-      enableWAL: true,
-      statementCacheSize: 100,
+      migrations: ['dist/migrations/*.js'],
+      autoLoadEntities: true,
     }),
   ],
   controllers: [AppController],

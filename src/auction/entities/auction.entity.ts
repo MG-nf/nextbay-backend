@@ -27,13 +27,13 @@ export class Auction {
   @Column({ type: 'numeric', scale: 2 })
   currentPrice!: number;
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'timestamptz' })
   endDate!: Date;
 
   @Column({ type: 'numeric' })
   sellerId!: number;
 
-  @CreateDateColumn({ type: 'datetime' })
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt!: Date;
 
   @OneToMany(() => Offer, (offer) => offer.auction)
