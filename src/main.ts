@@ -2,7 +2,7 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ClassSerializerInterceptor } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-
+import { DataSource } from 'typeorm';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -38,6 +38,10 @@ async function bootstrap() {
     origin: 'http://localhost:3000', // Allow your Next.js app
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
+
+  const dataSource = app.get(DataSource);
+
+  await dataSource.runMigrations();
 
   await app.listen(process.env.PORT ?? 3000);
 }
