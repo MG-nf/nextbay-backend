@@ -35,7 +35,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.enableCors({
-    origin: 'https://nextbay-backend.onrender.com',
+    origin: 'https://nextbay-frontend-l1vdpxn2i-nf2026.vercel.app/',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
 
