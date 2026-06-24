@@ -35,13 +35,18 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.enableCors({
-    origin: 'http://localhost:3000', // Allow your Next.js app
+    origin: 'http://localhost:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
 
-  const dataSource = app.get(DataSource);
-
-  await dataSource.runMigrations();
+  try {
+    const dataSource = app.get(DataSource);
+    await dataSource.runMigrations();
+    console.log('Migrations applied successfully!');
+  } catch (error) {
+    console.error('Migration failed:', error);
+    process.exit(1);
+  }
 
   await app.listen(process.env.PORT ?? 3000);
 }
